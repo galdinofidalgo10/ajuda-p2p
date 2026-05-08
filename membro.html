@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Elite | Meus Níveis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { background: #020617; color: #f8fafc; font-family: 'Montserrat', sans-serif; }
+        .glass-card { background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(184, 134, 11, 0.2); border-radius: 20px; }
+        .btn-gold { background: linear-gradient(135deg, #b8860b 0%, #fde047 100%); color: #000; font-weight: 900; }
+        .barra-progresso { background: rgba(255,255,255,0.05); border-radius: 10px; height: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
+        .progresso-fill { background: linear-gradient(90deg, #b8860b, #fde047); height: 100%; transition: width 0.5s ease-in-out; }
+    </style>
+</head>
+<body class="p-4 pb-12">
+    <div class="max-w-md mx-auto">
+        <header class="text-center mb-8 pt-4">
+            <h1 class="text-2xl font-black text-yellow-500 uppercase italic">MINHA REDE</h1>
+            <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest text-center">Controle de Níveis P2P</p>
+        </header>
+
+        <div class="glass-card p-6 mb-6 border-t-4 border-t-yellow-500 shadow-2xl">
+            <h2 class="text-[11px] font-black text-white mb-6 uppercase tracking-widest text-center">Evolução da Rede</h2>
+            <div class="space-y-6">
+                <div>
+                    <div class="flex justify-between text-[10px] mb-2 font-bold uppercase">
+                        <span class="text-yellow-500">1º Nível (Seus 3 Diretos)</span>
+                        <span class="text-white">0 / 3</span>
+                    </div>
+                    <div class="barra-progresso"><div class="progresso-fill" style="width: 0%;"></div></div>
+                </div>
+                <div>
+                    <div class="flex justify-between text-[10px] mb-2 font-bold uppercase">
+                        <span class="text-yellow-500">2º Nível (Indiretos)</span>
+                        <span class="text-white">0 / 9</span>
+                    </div>
+                    <div class="barra-progresso"><div class="progresso-fill" style="width: 0%;"></div></div>
+                </div>
+                <div>
+                    <div class="flex justify-between text-[10px] mb-2 font-bold uppercase">
+                        <span class="text-yellow-500">3º Nível (Indiretos)</span>
+                        <span class="text-white">0 / 27</span>
+                    </div>
+                    <div class="barra-progresso"><div class="progresso-fill" style="width: 0%;"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card p-5 mb-6">
+            <h2 class="text-[10px] font-black text-yellow-500 mb-2 uppercase text-center">Seu Link de Convite</h2>
+            <div class="flex gap-2">
+                <input type="text" id="link" readonly class="w-full bg-black/40 border border-white/5 p-2 rounded text-[10px] font-mono" value="https://galdinofidalgo10.github.io/ajudamutua/index.html">
+                <button onclick="copiar()" class="btn-gold px-3 rounded text-xs">COPIAR</button>
+            </div>
+        </div>
+
+        <a href="https://wa.me/5598912345678" class="block w-full text-center py-4 glass-card text-yellow-500 font-black text-[10px] uppercase tracking-widest border border-yellow-500/20">
+            Suporte ao Líder Galdino
+        </a>
+    </div>
+
+    <script>
+        function copiar() {
+            const input = document.getElementById("link");
+            input.select();
+            document.execCommand("copy");
+            alert("Link de indicação copiado!");
+        }
+    </script>
+</body>
+</html>
