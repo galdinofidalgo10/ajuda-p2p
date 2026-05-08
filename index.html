@@ -3,74 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel de Líder | Protocolo Elite</title>
+    <title>Escritório Virtual | Protocolo Elite</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         body { background: #020617; color: #f8fafc; font-family: 'Montserrat', sans-serif; }
         .glass-card { background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(184, 134, 11, 0.2); border-radius: 20px; }
         .btn-gold { background: linear-gradient(135deg, #b8860b 0%, #fde047 100%); color: #000; font-weight: 900; }
-        .barra-progresso { background: rgba(255,255,255,0.05); border-radius: 10px; height: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
-        .progresso-fill { background: linear-gradient(90deg, #b8860b, #fde047); height: 100%; width: 0%; transition: width 0.8s ease-in-out; }
+        .barra-progresso { background: rgba(255,255,255,0.05); border-radius: 10px; height: 8px; overflow: hidden; }
+        .progresso-fill { background: linear-gradient(90deg, #b8860b, #fde047); height: 100%; width: 0%; transition: width 1s; }
     </style>
 </head>
-<body class="p-4 pb-12">
-
+<body class="p-4">
     <div class="max-w-md mx-auto">
-        <header class="flex justify-between items-start mb-8 pt-4">
+        <header class="mb-6 pt-4 flex justify-between items-start">
             <div>
-                <h1 class="text-xl font-black text-yellow-500 uppercase italic leading-tight">Escritório<br>Virtual</h1>
-                <p id="nomeExibicao" class="text-[10px] text-white font-bold uppercase mt-1">Carregando...</p>
-                <p id="indicadoPorExibicao" class="text-[9px] text-slate-500 font-bold uppercase italic mt-0.5">Indicado por: ...</p>
+                <h1 class="text-xl font-black text-yellow-500 uppercase italic">Escritório Virtual</h1>
+                <p id="nomeExibicao" class="text-[10px] text-white font-bold uppercase italic">Carregando...</p>
+                <p id="indicadoPorExibicao" class="text-[9px] text-slate-500 font-bold uppercase">Indicado por: ...</p>
             </div>
-            <div class="text-right">
-                <span id="statusBadge" class="text-slate-500 text-[10px] font-black uppercase">● Verificando</span>
-            </div>
+            <span id="statusBadge" class="text-[9px] font-black uppercase p-1 px-2 glass-card text-yellow-500 italic">Verificando</span>
         </header>
 
-        <div class="glass-card p-6 mb-6 border-t-4 border-t-yellow-500 shadow-2xl">
-            <h2 class="text-[11px] font-black text-white mb-6 uppercase tracking-widest text-center italic">Minha Evolução de Rede</h2>
-            
+        <div class="glass-card p-6 mb-6 border-t-2 border-yellow-500/30">
+            <h2 class="text-[10px] font-black text-center mb-6 uppercase tracking-widest text-white italic">Sua Evolução Elite</h2>
             <div class="space-y-6">
                 <div>
-                    <div class="flex justify-between text-[10px] mb-2 font-bold uppercase text-yellow-500">
-                        <span>1º Nível (Diretos)</span>
-                        <span id="txt_n1" class="text-white">0 / 3</span>
+                    <div class="flex justify-between text-[9px] mb-2 font-bold uppercase text-yellow-500">
+                        <span>Nível 1 (Diretos)</span> <span id="txt_n1" class="text-white">0 / 3</span>
                     </div>
                     <div class="barra-progresso"><div id="bar_n1" class="progresso-fill"></div></div>
                 </div>
                 <div>
-                    <div class="flex justify-between text-[10px] mb-2 font-bold uppercase text-yellow-500">
-                        <span>2º Nível (Indiretos)</span>
-                        <span id="txt_n2" class="text-white">0 / 9</span>
+                    <div class="flex justify-between text-[9px] mb-2 font-bold uppercase text-yellow-500">
+                        <span>Nível 2 (Indiretos)</span> <span id="txt_n2" class="text-white">0 / 9</span>
                     </div>
                     <div class="barra-progresso"><div id="bar_n2" class="progresso-fill"></div></div>
                 </div>
                 <div>
-                    <div class="flex justify-between text-[10px] mb-2 font-bold uppercase text-yellow-500">
-                        <span>3º Nível (Indiretos)</span>
-                        <span id="txt_n3" class="text-white">0 / 27</span>
+                    <div class="flex justify-between text-[9px] mb-2 font-bold uppercase text-yellow-500">
+                        <span>Nível 3 (Indiretos)</span> <span id="txt_n3" class="text-white">0 / 27</span>
                     </div>
                     <div class="barra-progresso"><div id="bar_n3" class="progresso-fill"></div></div>
                 </div>
             </div>
         </div>
 
-        <div id="areaLink" class="glass-card p-5 mb-6 hidden">
-            <h2 class="text-[10px] font-black text-yellow-500 mb-3 uppercase text-center italic">Seu Link de Convite</h2>
+        <div id="areaLink" class="glass-card p-4 mb-6 hidden">
+            <p class="text-[10px] text-yellow-500 font-bold mb-2 text-center uppercase italic">Seu Link de Convite</p>
             <div class="flex gap-2">
-                <input type="text" id="linkConvite" readonly class="w-full bg-black/40 border border-white/5 p-3 rounded-lg text-[10px] text-white font-mono">
-                <button onclick="copiar()" class="btn-gold px-4 rounded-lg italic text-[10px]">COPIAR</button>
+                <input type="text" id="linkConvite" readonly class="w-full bg-black/40 border border-white/5 p-2 rounded text-[10px] text-white font-mono">
+                <button onclick="copiar()" class="btn-gold px-4 rounded text-[10px] italic">COPIAR</button>
             </div>
         </div>
 
-        <div id="msgAguarde" class="text-center p-6 glass-card mb-6 border border-yellow-500/10">
-            <p class="text-yellow-500 font-bold text-[10px] uppercase animate-pulse">Aguardando aprovação do administrador...</p>
+        <div id="msgAguarde" class="text-center p-4 glass-card mb-6 border border-yellow-500/20">
+            <p class="text-yellow-500 font-bold text-[10px] uppercase animate-pulse">Aguardando ativação do administrador...</p>
         </div>
-
-        <a href="https://wa.me/5598912345678" class="block w-full text-center py-4 glass-card text-[9px] font-black text-slate-500 uppercase tracking-widest border border-white/5">
-            Suporte ao Líder Galdino
-        </a>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
@@ -88,72 +77,70 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // 1. Identifica o usuário logado
+        // LÓGICA DE LOGIN AUTOMÁTICO (Captura o nome que você envia pelo Zap)
+        const urlParams = new URLSearchParams(window.location.search);
+        const userUrl = urlParams.get('user');
+        if(userUrl) {
+            localStorage.setItem('usuario_nome', decodeURIComponent(userUrl));
+        }
+
         let meuNome = localStorage.getItem('usuario_nome');
+        if(!meuNome) { window.location.href = "index.html"; }
 
-        // LÓGICA DE SINCRONIZAÇÃO EM TEMPO REAL
+        // ESCUTA O BANCO DE DADOS
         database.ref('solicitacoes/').on('value', (snap) => {
-            let n1 = 0, n2 = 0, n3 = 0;
-            let statusLiberado = false;
-            let quemMeIndicou = "Direto";
-
+            let n1=0, n2=0, n3=0, liberado=false, padrinho="Direto";
             const rede = [];
-            snap.forEach(child => {
-                const u = child.val();
-                rede.push(u);
-                
-                // Busca meus dados para saber meu status e quem me indicou
+            
+            snap.forEach(c => {
+                const u = c.val(); rede.push(u);
                 if(u.nome === meuNome) {
-                    if(u.status === 'liberado') statusLiberado = true;
-                    if(u.indicado_por) quemMeIndicou = u.indicado_por;
+                    if(u.status === 'liberado') liberado = true;
+                    if(u.indicado_por) padrinho = u.indicado_por;
                 }
             });
 
-            // Atualiza cabeçalho
+            // Atualiza Interface
             document.getElementById('nomeExibicao').innerText = "Líder: " + meuNome;
-            document.getElementById('indicadoPorExibicao').innerText = "Indicado por: " + quemMeIndicou;
+            document.getElementById('indicadoPorExibicao').innerText = "Indicado por: " + padrinho;
 
-            if(statusLiberado) {
-                document.getElementById('statusBadge').innerText = "● Conta Ativa";
-                document.getElementById('statusBadge').className = "text-green-500 text-[10px] font-black uppercase";
+            if(liberado) {
+                document.getElementById('statusBadge').innerText = "CONTA ATIVA";
+                document.getElementById('statusBadge').className = "text-green-500 font-black p-1 px-2 glass-card italic text-[9px]";
                 document.getElementById('areaLink').classList.remove('hidden');
                 document.getElementById('msgAguarde').classList.add('hidden');
-                document.getElementById('linkConvite').value = window.location.href.split('membro.html')[0] + "index.html?ref=" + encodeURIComponent(meuNome);
+                // Gera o link automático de convite
+                const baseLink = window.location.href.split('membro.html')[0];
+                document.getElementById('linkConvite').value = baseLink + "index.html?ref=" + encodeURIComponent(meuNome);
             }
 
-            // CONTADOR DE REDE (P2P)
+            // CONTADOR DE REDE (P2P DINÂMICO)
             rede.forEach(u1 => {
                 if(u1.indicado_por === meuNome && u1.status === 'liberado') {
-                    n1++; // Nível 1
+                    n1++; // Seus diretos
                     rede.forEach(u2 => {
                         if(u2.indicado_por === u1.nome && u2.status === 'liberado') {
-                            n2++; // Nível 2
+                            n2++; // Seus indiretos (Nível 2)
                             rede.forEach(u3 => {
-                                if(u3.indicado_por === u2.nome && u3.status === 'liberado') {
-                                    n3++; // Nível 3
-                                }
+                                if(u3.indicado_por === u2.nome && u3.status === 'liberado') n3++; // Nível 3
                             });
                         }
                     });
                 }
             });
 
-            atualizarBarra('n1', n1, 3);
-            atualizarBarra('n2', n2, 9);
-            atualizarBarra('n3', n3, 27);
+            // Atualiza as barras visualmente
+            const upd = (id, a, t) => {
+                let perc = (a/t*100 > 100 ? 100 : a/t*100);
+                document.getElementById('bar_'+id).style.width = perc + "%";
+                document.getElementById('txt_'+id).innerText = `${a} / ${t}`;
+            };
+            upd('n1', n1, 3); upd('n2', n2, 9); upd('n3', n3, 27);
         });
 
-        function atualizarBarra(id, atual, total) {
-            let p = (atual / total) * 100;
-            document.getElementById('bar_' + id).style.width = (p > 100 ? 100 : p) + "%";
-            document.getElementById('txt_' + id).innerText = `${atual} / ${total}`;
-        }
-
         function copiar() {
-            const i = document.getElementById("linkConvite");
-            i.select();
-            navigator.clipboard.writeText(i.value);
-            alert("Link de indicação copiado!");
+            const i = document.getElementById("linkConvite"); i.select();
+            navigator.clipboard.writeText(i.value); alert("Link de convite copiado!");
         }
     </script>
 </body>
