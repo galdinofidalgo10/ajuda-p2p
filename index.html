@@ -98,8 +98,9 @@
                         document.getElementById('statusBadge').innerText = "CONTA ATIVA";
                         document.getElementById('statusBadge').className = "text-green-500 font-black p-1 px-2 glass-card text-[9px] italic";
                         document.getElementById('areaLink').classList.remove('hidden');
-                        // Gera o link para convidar novos líderes
-                        document.getElementById('linkConvite').value = window.location.origin + "/ajuda-p2p/?ref=" + encodeURIComponent(meuNome);
+                        
+                        // ALTERAÇÃO AQUI: Link agora aponta para ajuda-mutua
+                        document.getElementById('linkConvite').value = "https://galdinofidalgo10.github.io/ajuda-mutua/index.html?ref=" + encodeURIComponent(meuNome);
                     }
 
                     // Lógica de Rede: Nível 1, 2 e 3
