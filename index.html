@@ -10,6 +10,7 @@
         body { background: #020617; color: #f8fafc; font-family: 'Montserrat', sans-serif; }
         .glass-card { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 24px; }
         .btn-gold { background: linear-gradient(135deg, #b8860b 0%, #fde047 100%); color: #000; font-weight: 900; text-transform: uppercase; }
+        .input-field { background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(212, 175, 55, 0.3); color: white; }
         
         #toast { visibility: hidden; min-width: 250px; background: linear-gradient(135deg, #b8860b, #fde047); color: #000; text-align: center; border-radius: 50px; padding: 15px; position: fixed; z-index: 100; left: 50%; bottom: 40px; transform: translateX(-50%); font-weight: 900; font-size: 11px; }
         #toast.show { visibility: visible; animation: fadeInUp 0.5s; }
@@ -18,75 +19,115 @@
 </head>
 <body class="p-4">
 
-    <div id="toast">LINK COPIADO COM SUCESSO!</div>
+    <div id="toast">CHAVE COPIADA!</div>
 
     <div class="max-w-md mx-auto">
-        <header class="flex justify-between items-center mb-8 pt-4">
+        <header class="flex justify-between items-center mb-6 pt-4">
             <div>
                 <h1 class="text-2xl font-black text-yellow-500 italic uppercase leading-none">Elite Desk</h1>
-                <p id="nomeUsuario" class="text-[9px] text-slate-400 font-bold uppercase mt-1 italic italic">Acesso Liberado</p>
+                <p id="nomeUsuario" class="text-[9px] text-slate-400 font-bold uppercase mt-1 italic">Membro: ---</p>
             </div>
             <div class="text-[9px] font-black uppercase p-1 px-3 bg-green-500/20 text-green-500 border border-green-500/30 rounded-full">Ativo</div>
         </header>
 
-        <div class="space-y-6">
-            <div class="glass-card p-6 border-t-4 border-t-yellow-500 shadow-2xl">
-                <h3 class="text-yellow-500 font-black text-[10px] uppercase mb-4 tracking-widest text-center italic">Sua Rede de Ajuda Mútua</h3>
-                <div class="grid grid-cols-3 gap-2">
-                    <div class="text-center p-3 bg-white/5 rounded-2xl border border-white/5 italic">
-                        <p class="text-[7px] text-slate-500 uppercase mb-1">Nível 1</p>
-                        <p class="text-[10px] font-black text-white uppercase italic">Liberado</p>
-                    </div>
-                    <div class="text-center p-3 bg-white/5 rounded-2xl border border-white/5 italic">
-                        <p class="text-[7px] text-slate-500 uppercase mb-1">Nível 2</p>
-                        <p class="text-[10px] font-black text-white uppercase italic">Liberado</p>
-                    </div>
-                    <div class="text-center p-3 bg-white/5 rounded-2xl border border-white/5 italic">
-                        <p class="text-[7px] text-slate-500 uppercase mb-1">Nível 3</p>
-                        <p class="text-[10px] font-black text-white uppercase italic">Liberado</p>
-                    </div>
-                </div>
+        <div class="grid grid-cols-2 gap-3 mb-6">
+            <div class="glass-card p-4 border-t-2 border-yellow-500/50 text-center">
+                <p class="text-[8px] text-slate-500 uppercase font-black mb-1">Lucro Total</p>
+                <p id="lucroReal" class="text-xl font-black text-yellow-500 italic">R$ 0,00</p>
             </div>
-
-            <div class="glass-card p-6 bg-yellow-500/5 border-yellow-500/30 text-center">
-                <p class="text-[9px] text-yellow-500 font-black uppercase tracking-widest mb-4 italic italic">Seu Link Profissional de Expansão</p>
-                
-                <div class="relative mb-4">
-                    <input type="text" id="linkFinal" readonly class="w-full bg-black/60 border border-yellow-500/20 p-5 rounded-2xl text-[10px] text-white text-center font-mono outline-none shadow-inner">
-                </div>
-
-                <button onclick="copiarLink()" class="btn-gold w-full py-5 rounded-2xl text-[11px] shadow-lg shadow-yellow-500/20 active:scale-95 transition-all">
-                    Copiar Link e Iniciar Rede
-                </button>
-                
-                <p class="text-[8px] text-slate-500 uppercase font-bold mt-4 tracking-tighter">
-                    Envie seu link para novos membros e cresça sua rede.
-                </p>
+            <div class="glass-card p-4 border-t-2 border-yellow-500/50 text-center">
+                <p class="text-[8px] text-slate-500 uppercase font-black mb-1">Indicações</p>
+                <p id="totalPessoas" class="text-xl font-black text-white italic">0</p>
             </div>
         </div>
+
+        <div class="glass-card p-5 mb-6 border-b-2 border-yellow-500/20">
+            <p class="text-[9px] text-yellow-500 font-black uppercase text-center mb-3">Seu Link de Expansão</p>
+            <input type="text" id="linkConvite" readonly class="input-field w-full p-4 rounded-xl text-[10px] text-center font-bold mb-3 outline-none">
+            <button onclick="copiar('linkConvite')" class="btn-gold w-full py-4 rounded-xl text-[10px] shadow-lg">Copiar Link</button>
+        </div>
+
+        <h2 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-4 text-center italic">Fluxo de Doação (Indicados)</h2>
+        <div id="listaDoacao" class="space-y-3">
+            <div class="glass-card p-4 border-l-4 border-yellow-500 relative overflow-hidden">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-[7px] text-yellow-500 font-black uppercase">Nível 01</p>
+                        <h3 id="donatarioNome" class="font-black text-xs uppercase text-white">Carregando...</h3>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-yellow-500 font-black text-sm italic">R$ 5,00</p>
+                        <button onclick="copiarPix()" class="text-[7px] text-slate-500 font-bold uppercase underline">Copiar PIX</button>
+                    </div>
+                </div>
+            </div>
+            </div>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <script>
-        // Pega o nome do usuário na URL vindo do seu Zap
+        const firebaseConfig = {
+            apiKey: "AIzaSyCZIP0M0M8FqC_LAtI9I36e_IIn_V-C4m4",
+            authDomain: "ajuda-mutua-7d99a.firebaseapp.com",
+            databaseURL: "https://ajuda-mutua-7d99a-default-rtdb.firebaseio.com",
+            projectId: "ajuda-mutua-7d99a",
+            storageBucket: "ajuda-mutua-7d99a.appspot.com",
+            appId: "1:1070775313117:web:fa90f5f0cb519ab38b1d34"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
         const params = new URLSearchParams(window.location.search);
-        const userURL = params.get('user') || "Membro Elite";
-
-        // Preenche os dados na tela imediatamente
-        document.getElementById('nomeUsuario').innerText = "Membro: " + userURL;
+        const userURL = params.get('user') || "Membro";
         
-        // Gera o link de convite apontando de volta para o cadastro
-        const linkConvite = "https://galdinofidalgo10.github.io/ajuda-mutua/index.html?ref=" + encodeURIComponent(userURL);
-        document.getElementById('linkFinal').value = linkConvite;
+        document.getElementById('nomeUsuario').innerText = "Membro: " + userURL;
+        document.getElementById('donatarioNome').innerText = userURL; // O indicado dele vê o nome dele para doar
+        document.getElementById('linkConvite').value = "https://galdinofidalgo10.github.io/ajuda-mutua/index.html?ref=" + encodeURIComponent(userURL);
 
-        function copiarLink() {
-            const link = document.getElementById('linkFinal');
-            link.select();
-            link.setSelectionRange(0, 99999); // Para mobile
-            document.execCommand('copy');
+        // LÓGICA EM TEMPO REAL: PESSOAS E LUCRO
+        database.ref('solicitacoes/').on('value', (snap) => {
+            let contador = 0;
+            let meuPix = "";
+
+            snap.forEach(doc => {
+                const dados = doc.val();
+                // Verifica quem se cadastrou usando o nome deste usuário como referência
+                // Nota: Você precisará salvar o 'ref' no cadastro para esta contagem ser exata
+                if(dados.referencia === userURL && dados.status === 'liberado') {
+                    contador++;
+                }
+                if(dados.nome === userURL) meuPix = dados.pix_cadastro;
+            });
+
+            // Atualiza a tela
+            document.getElementById('totalPessoas').innerText = contador;
+            const lucroTotal = contador * 5; // Cada pessoa no nível 1 paga R$ 5,00
+            document.getElementById('lucroReal').innerText = "R$ " + lucroTotal.toFixed(2).replace('.', ',');
             
-            const toast = document.getElementById("toast");
-            toast.className = "show";
-            setTimeout(() => { toast.className = ""; }, 3000);
+            // Guarda o pix para a função de cópia
+            window.minhaChavePix = meuPix;
+        });
+
+        function copiar(id) {
+            const input = document.getElementById(id);
+            input.select();
+            document.execCommand('copy');
+            showToast("LINK COPIADO!");
+        }
+
+        function copiarPix() {
+            if(window.minhaChavePix) {
+                navigator.clipboard.writeText(window.minhaChavePix);
+                showToast("PIX COPIADO!");
+            }
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById("toast");
+            t.innerText = msg;
+            t.className = "show";
+            setTimeout(() => { t.className = ""; }, 3000);
         }
     </script>
 </body>
