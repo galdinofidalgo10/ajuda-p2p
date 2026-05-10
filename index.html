@@ -3,23 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Escritório Virtual | Protocolo Elite</title>
+    <title>Elite Desk | Escritório Virtual</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         body { background: #020617; color: #f8fafc; font-family: 'Montserrat', sans-serif; }
         .glass-card { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 24px; }
         .btn-gold { background: linear-gradient(135deg, #b8860b 0%, #fde047 100%); color: #000; font-weight: 900; text-transform: uppercase; }
-        .input-field { background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(212, 175, 55, 0.3); color: white; }
-        
-        #toast { visibility: hidden; min-width: 250px; background: linear-gradient(135deg, #b8860b, #fde047); color: #000; text-align: center; border-radius: 50px; padding: 15px; position: fixed; z-index: 100; left: 50%; bottom: 40px; transform: translateX(-50%); font-weight: 900; font-size: 11px; }
+        .input-photo { display: none; }
+        #toast { visibility: hidden; min-width: 200px; background: #fde047; color: #000; text-align: center; border-radius: 50px; padding: 10px; position: fixed; z-index: 100; left: 50%; bottom: 30px; transform: translateX(-50%); font-weight: 900; font-size: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         #toast.show { visibility: visible; animation: fadeInUp 0.5s; }
-        @keyframes fadeInUp { from { bottom: 0; opacity: 0; } to { bottom: 40px; opacity: 1; } }
+        @keyframes fadeInUp { from { bottom: 0; opacity: 0; } to { bottom: 30px; opacity: 1; } }
     </style>
 </head>
 <body class="p-4">
 
-    <div id="toast">CHAVE COPIADA!</div>
+    <div id="toast">AÇÃO REALIZADA!</div>
 
     <div class="max-w-md mx-auto">
         <header class="flex justify-between items-center mb-6 pt-4">
@@ -27,41 +26,51 @@
                 <h1 class="text-2xl font-black text-yellow-500 italic uppercase leading-none">Elite Desk</h1>
                 <p id="nomeUsuario" class="text-[9px] text-slate-400 font-bold uppercase mt-1 italic">Membro: ---</p>
             </div>
-            <div class="text-[9px] font-black uppercase p-1 px-3 bg-green-500/20 text-green-500 border border-green-500/30 rounded-full">Ativo</div>
+            <div class="text-[9px] font-black uppercase p-1 px-3 bg-green-500/20 text-green-500 border border-green-500/30 rounded-full shadow-[0_0_10px_rgba(34,197,94,0.2)]">Ativo</div>
         </header>
 
         <div class="grid grid-cols-2 gap-3 mb-6">
-            <div class="glass-card p-4 border-t-2 border-yellow-500/50 text-center">
-                <p class="text-[8px] text-slate-500 uppercase font-black mb-1">Lucro Total</p>
-                <p id="lucroReal" class="text-xl font-black text-yellow-500 italic">R$ 0,00</p>
+            <div class="glass-card p-6 border-t-2 border-yellow-500/50 text-center shadow-lg">
+                <p class="text-[8px] text-slate-500 font-black mb-2 tracking-widest">LUCRO REAL</p>
+                <p id="lucroReal" class="text-2xl font-black text-yellow-500 italic">R$ 0,00</p>
             </div>
-            <div class="glass-card p-4 border-t-2 border-yellow-500/50 text-center">
-                <p class="text-[8px] text-slate-500 uppercase font-black mb-1">Indicações</p>
-                <p id="totalPessoas" class="text-xl font-black text-white italic">0</p>
+            <div class="glass-card p-6 border-t-2 border-yellow-500/50 text-center shadow-lg">
+                <p class="text-[8px] text-slate-500 font-black mb-2 tracking-widest">INDICAÇÕES</p>
+                <p id="totalPessoas" class="text-2xl font-black text-white italic">0</p>
             </div>
         </div>
 
-        <div class="glass-card p-5 mb-6 border-b-2 border-yellow-500/20">
-            <p class="text-[9px] text-yellow-500 font-black uppercase text-center mb-3">Seu Link de Expansão</p>
-            <input type="text" id="linkConvite" readonly class="input-field w-full p-4 rounded-xl text-[10px] text-center font-bold mb-3 outline-none">
-            <button onclick="copiar('linkConvite')" class="btn-gold w-full py-4 rounded-xl text-[10px] shadow-lg">Copiar Link</button>
-        </div>
-
-        <h2 class="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-4 text-center italic">Fluxo de Doação (Indicados)</h2>
-        <div id="listaDoacao" class="space-y-3">
-            <div class="glass-card p-4 border-l-4 border-yellow-500 relative overflow-hidden">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <p class="text-[7px] text-yellow-500 font-black uppercase">Nível 01</p>
-                        <h3 id="donatarioNome" class="font-black text-xs uppercase text-white">Carregando...</h3>
+        <div class="glass-card p-6 mb-6 border-b-4 border-yellow-500 shadow-2xl">
+            <h2 class="text-center text-[10px] text-yellow-500 font-black uppercase mb-6 tracking-widest italic">Ferramentas de Expansão</h2>
+            
+            <div class="flex flex-col items-center space-y-6">
+                <div onclick="document.getElementById('inputFoto').click()" class="relative w-24 h-24 rounded-full border-2 border-dashed border-yellow-500/50 flex items-center justify-center cursor-pointer overflow-hidden bg-black/40 group">
+                    <img id="imgPreview" src="" class="hidden w-full h-full object-cover">
+                    <div id="txtAdd" class="text-[8px] text-yellow-500 font-black text-center p-2 uppercase leading-tight group-hover:scale-110 transition-transform">
+                        Toque para<br>Adicionar Foto
                     </div>
-                    <div class="text-right">
-                        <p class="text-yellow-500 font-black text-sm italic">R$ 5,00</p>
-                        <button onclick="copiarPix()" class="text-[7px] text-slate-500 font-bold uppercase underline">Copiar PIX</button>
+                </div>
+                <input type="file" id="inputFoto" class="input-photo" accept="image/*" onchange="previewFoto(this)">
+
+                <div class="w-full space-y-4">
+                    <div>
+                        <p class="text-[9px] text-yellow-500 font-black uppercase text-center mb-2 italic">Seu Link de Convite Profissional</p>
+                        <input type="text" id="linkConvite" readonly class="w-full bg-black/60 border border-yellow-500/20 p-4 rounded-xl text-[10px] text-white text-center font-bold outline-none shadow-inner">
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="copiarLink()" class="btn-gold py-4 rounded-xl text-[10px] shadow-lg active:scale-95 transition-all">Copiar Link</button>
+                        <button onclick="gerarCartaoVisita()" class="bg-white/5 border border-white/20 text-white py-4 rounded-xl text-[10px] font-black uppercase italic active:scale-95 transition-all">Baixar Cartão</button>
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
+        
+        <p class="text-center text-[8px] text-slate-600 font-bold uppercase tracking-widest italic">
+            Protocolo Elite © 2026 - Sistema de Ajuda Mútua
+        </p>
+
+        <canvas id="canvasCartao" width="800" height="450" style="display:none;"></canvas>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
@@ -78,57 +87,122 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
+        // Identificação do Usuário via URL
         const params = new URLSearchParams(window.location.search);
-        const userURL = params.get('user') || "Membro";
-        
+        const userURL = params.get('user') || "Membro Elite";
         document.getElementById('nomeUsuario').innerText = "Membro: " + userURL;
-        document.getElementById('donatarioNome').innerText = userURL; // O indicado dele vê o nome dele para doar
-        document.getElementById('linkConvite').value = "https://galdinofidalgo10.github.io/ajuda-mutua/index.html?ref=" + encodeURIComponent(userURL);
+        
+        // Configuração do Link de Convite
+        const meuLink = "https://galdinofidalgo10.github.io/ajuda-mutua/index.html?ref=" + encodeURIComponent(userURL);
+        document.getElementById('linkConvite').value = meuLink;
 
-        // LÓGICA EM TEMPO REAL: PESSOAS E LUCRO
-        database.ref('solicitacoes/').on('value', (snap) => {
-            let contador = 0;
-            let meuPix = "";
+        // Preview da Foto do Usuário
+        function previewFoto(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('imgPreview');
+                    img.src = e.target.result;
+                    img.classList.remove('hidden');
+                    document.getElementById('txtAdd').classList.add('hidden');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 
-            snap.forEach(doc => {
-                const dados = doc.val();
-                // Verifica quem se cadastrou usando o nome deste usuário como referência
-                // Nota: Você precisará salvar o 'ref' no cadastro para esta contagem ser exata
-                if(dados.referencia === userURL && dados.status === 'liberado') {
-                    contador++;
-                }
-                if(dados.nome === userURL) meuPix = dados.pix_cadastro;
-            });
-
-            // Atualiza a tela
-            document.getElementById('totalPessoas').innerText = contador;
-            const lucroTotal = contador * 5; // Cada pessoa no nível 1 paga R$ 5,00
-            document.getElementById('lucroReal').innerText = "R$ " + lucroTotal.toFixed(2).replace('.', ',');
-            
-            // Guarda o pix para a função de cópia
-            window.minhaChavePix = meuPix;
-        });
-
-        function copiar(id) {
-            const input = document.getElementById(id);
+        // Sistema de Cópia do Link
+        function copiarLink() {
+            const input = document.getElementById('linkConvite');
             input.select();
+            input.setSelectionRange(0, 99999);
             document.execCommand('copy');
             showToast("LINK COPIADO!");
         }
 
-        function copiarPix() {
-            if(window.minhaChavePix) {
-                navigator.clipboard.writeText(window.minhaChavePix);
-                showToast("PIX COPIADO!");
-            }
-        }
-
         function showToast(msg) {
-            const t = document.getElementById("toast");
+            const t = document.getElementById('toast');
             t.innerText = msg;
             t.className = "show";
-            setTimeout(() => { t.className = ""; }, 3000);
+            setTimeout(() => t.className = "", 3000);
         }
+
+        // GERADOR DE CARTÃO DE VISITA DIGITAL
+        function gerarCartaoVisita() {
+            const canvas = document.getElementById('canvasCartao');
+            const ctx = canvas.getContext('2d');
+            const foto = document.getElementById('imgPreview');
+
+            if(foto.classList.contains('hidden')) {
+                alert("Adicione uma foto para gerar seu cartão personalizado!");
+                return;
+            }
+
+            // Fundo
+            ctx.fillStyle = "#020617";
+            ctx.fillRect(0, 0, 800, 450);
+
+            // Detalhes em Ouro
+            ctx.strokeStyle = "#b8860b";
+            ctx.lineWidth = 8;
+            ctx.strokeRect(20, 20, 760, 410);
+
+            // Renderizar Foto Circular
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(180, 225, 110, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.clip();
+            ctx.drawImage(foto, 70, 115, 220, 220);
+            ctx.restore();
+            
+            ctx.strokeStyle = "#fde047";
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.arc(180, 225, 110, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // Textos
+            ctx.textAlign = "left";
+            ctx.fillStyle = "#fde047";
+            ctx.font = "italic 900 42px Montserrat";
+            ctx.fillText("PROTOCOLO ELITE", 330, 150);
+
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "900 32px Montserrat";
+            ctx.fillText(userURL.toUpperCase(), 330, 205);
+
+            ctx.fillStyle = "#64748b";
+            ctx.font = "700 16px Montserrat";
+            ctx.fillText("MEMBRO OFICIAL ATIVO", 330, 235);
+
+            ctx.fillStyle = "#fde047";
+            ctx.font = "900 18px Montserrat";
+            ctx.fillText("LUCRO DE R$ 5,00 POR INDICAÇÃO", 330, 310);
+            
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "500 14px Montserrat";
+            ctx.fillText("Clique no link da minha bio para entrar!", 330, 340);
+
+            // Download
+            const linkDownload = document.createElement('a');
+            linkDownload.download = `cartao-elite-${userURL}.png`;
+            linkDownload.href = canvas.toDataURL();
+            linkDownload.click();
+            showToast("CARTÃO BAIXADO!");
+        }
+
+        // Lógica de Ganhos Real do Firebase
+        database.ref('solicitacoes/').on('value', (snap) => {
+            let contador = 0;
+            snap.forEach(doc => {
+                const data = doc.val();
+                if(data.referencia === userURL && data.status === 'liberado') {
+                    contador++;
+                }
+            });
+            document.getElementById('totalPessoas').innerText = contador;
+            document.getElementById('lucroReal').innerText = "R$ " + (contador * 5).toFixed(2).replace('.', ',');
+        });
     </script>
 </body>
 </html>
