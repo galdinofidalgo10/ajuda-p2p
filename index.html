@@ -10,46 +10,28 @@
         body { background: #020617; color: #f8fafc; font-family: 'Montserrat', sans-serif; }
         .glass-card { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 20px; }
         .btn-gold { background: linear-gradient(135deg, #b8860b 0%, #fde047 100%); color: #000; font-weight: 900; }
-        .barra-progresso { background: rgba(255,255,255,0.05); border-radius: 10px; height: 8px; overflow: hidden; }
-        .progresso-fill { background: linear-gradient(90deg, #b8860b, #fde047); height: 100%; width: 0%; transition: 1.5s ease-in-out; }
-        #painel { display: none; }
+        .trava-overlay { background: rgba(2, 6, 23, 0.95); backdrop-filter: blur(8px); display: none; }
     </style>
 </head>
 <body class="p-4">
-    <div id="loading" class="text-center py-20 text-yellow-500 font-bold animate-pulse uppercase text-[10px]">Sincronizando Rede Elite...</div>
+    <div id="loading" class="text-center py-20 text-yellow-500 font-bold animate-pulse">Sincronizando...</div>
 
-    <div id="painel" class="max-w-md mx-auto">
+    <div id="painel" class="max-w-md mx-auto hidden">
         <header class="mb-6 pt-4 flex justify-between items-start">
-            <div>
-                <h1 class="text-xl font-black text-yellow-500 uppercase italic leading-tight">Escritório<br>Virtual</h1>
-                <p id="nomeExibicao" class="text-[10px] text-white font-bold uppercase mt-1 font-mono tracking-tighter italic">Carregando...</p>
-            </div>
-            <span id="statusBadge" class="text-[9px] font-black uppercase p-1 px-2 glass-card text-yellow-500 italic">Verificando</span>
+            <h1 class="text-xl font-black text-yellow-500 uppercase italic leading-tight">Escritório<br>Virtual</h1>
+            <span id="statusBadge" class="text-[9px] font-black uppercase p-1 px-2 glass-card italic">Verificando</span>
         </header>
 
-        <div class="glass-card p-6 mb-6 border-t-2 border-yellow-500/30 shadow-2xl text-center">
-            <h2 class="text-[10px] font-black mb-6 uppercase text-white tracking-widest italic">Sua Evolução na Rede</h2>
-            <div class="space-y-6 text-left">
-                <div>
-                    <div class="flex justify-between text-[9px] mb-2 font-bold text-yellow-500 uppercase"><span>Nível 1 (Diretos)</span> <span id="txt_n1" class="text-white">0 / 3</span></div>
-                    <div class="barra-progresso"><div id="bar_n1" class="progresso-fill"></div></div>
-                </div>
-                <div>
-                    <div class="flex justify-between text-[9px] mb-2 font-bold text-yellow-500 uppercase"><span>Nível 2 (Indiretos)</span> <span id="txt_n2" class="text-white">0 / 9</span></div>
-                    <div class="barra-progresso"><div id="bar_n2" class="progresso-fill"></div></div>
-                </div>
-                <div>
-                    <div class="flex justify-between text-[9px] mb-2 font-bold text-yellow-500 uppercase"><span>Nível 3 (Rede)</span> <span id="txt_n3" class="text-white">0 / 27</span></div>
-                    <div class="barra-progresso"><div id="bar_n3" class="progresso-fill"></div></div>
-                </div>
+        <div id="conteudoProtegido" class="space-y-6">
+            <div class="glass-card p-6 text-center border-t-2 border-yellow-500/30">
+                <h2 class="text-[10px] font-black mb-4 uppercase tracking-widest italic">Evolução da Rede</h2>
+                <div id="statsRede" class="text-xs opacity-50 uppercase">Bloqueado - Aguardando Ativação</div>
             </div>
-        </div>
 
-        <div id="areaLink" class="glass-card p-4 mb-6 hidden border border-yellow-500/20">
-            <p class="text-[10px] text-yellow-500 font-bold mb-2 text-center uppercase italic">Seu Link de Convite</p>
-            <div class="flex gap-2">
-                <input type="text" id="linkConvite" readonly class="w-full bg-black/40 border border-white/5 p-2 rounded text-[10px] text-white font-mono outline-none">
-                <button onclick="copiar()" class="btn-gold px-4 rounded text-[10px] font-black italic">COPIAR</button>
+            <div id="areaLink" class="glass-card p-4 hidden">
+                <p class="text-[10px] text-yellow-500 font-bold mb-2 text-center uppercase">Seu Link de Convite</p>
+                <input type="text" id="linkConvite" readonly class="w-full bg-black/40 border border-white/5 p-3 rounded text-[10px] text-white outline-none mb-3">
+                <button onclick="copiar()" class="btn-gold w-full py-3 rounded text-[10px]">COPIAR LINK</button>
             </div>
         </div>
     </div>
@@ -57,82 +39,38 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyCZIP0M0M8FqC_LAtI9I36e_IIn_V-C4m4",
-            authDomain: "ajuda-mutua-7d99a.firebaseapp.com",
-            databaseURL: "https://ajuda-mutua-7d99a-default-rtdb.firebaseio.com",
-            projectId: "ajuda-mutua-7d99a",
-            storageBucket: "ajuda-mutua-7d99a.appspot.com",
-            appId: "1:1070775313117:web:fa90f5f0cb519ab38b1d34"
-        };
+        const firebaseConfig = { /* Sua Configuração Firebase */ };
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
         const urlParams = new URLSearchParams(window.location.search);
-        const userLink = urlParams.get('user');
-        
-        if(userLink) {
-            localStorage.setItem('usuario_nome', decodeURIComponent(userLink).trim());
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
-
-        const meuNome = localStorage.getItem('usuario_nome');
+        const meuNome = urlParams.get('user');
 
         if(!meuNome) {
-            document.getElementById('loading').innerHTML = "<div class='glass-card p-4 inline-block'><p class='text-red-500 font-black text-[10px] uppercase'>Acesso Restrito.<br>Use o link do seu Gestor.</p></div>";
+            document.getElementById('loading').innerText = "ACESSO NEGADO.";
         } else {
             database.ref('solicitacoes/').on('value', (snap) => {
-                let achou = false, liberado = false, n1=0, n2=0, n3=0;
-                const rede = [];
-                snap.forEach(c => {
-                    const u = c.val(); rede.push(u);
-                    if(u.nome === meuNome) { achou = true; if(u.status === 'liberado') liberado = true; }
-                });
+                let user = null;
+                snap.forEach(c => { if(c.val().nome === meuNome) user = c.val(); });
 
-                if(achou) {
+                if(user) {
                     document.getElementById('loading').style.display = "none";
-                    document.getElementById('painel').style.display = "block";
-                    document.getElementById('nomeExibicao').innerText = "Líder: " + meuNome;
+                    document.getElementById('painel').classList.remove('hidden');
 
-                    if(liberado) {
+                    if(user.status === 'liberado') {
                         document.getElementById('statusBadge').innerText = "CONTA ATIVA";
-                        document.getElementById('statusBadge').className = "text-green-500 font-black p-1 px-2 glass-card text-[9px] italic";
+                        document.getElementById('statusBadge').classList.add('text-green-500');
                         document.getElementById('areaLink').classList.remove('hidden');
-                        
-                        // ALTERAÇÃO AQUI: Link agora aponta para ajuda-mutua
                         document.getElementById('linkConvite').value = "https://galdinofidalgo10.github.io/ajuda-mutua/index.html?ref=" + encodeURIComponent(meuNome);
+                        document.getElementById('statsRede').innerText = "Acompanhe seus níveis abaixo...";
+                    } else {
+                        document.getElementById('statusBadge').innerText = "PENDENTE";
+                        document.getElementById('statusBadge').classList.add('text-yellow-500');
                     }
-
-                    // Lógica de Rede: Nível 1, 2 e 3
-                    rede.forEach(u1 => {
-                        if(u1.indicado_por === meuNome && u1.status === 'liberado') {
-                            n1++;
-                            rede.forEach(u2 => {
-                                if(u2.indicado_por === u1.nome && u2.status === 'liberado') {
-                                    n2++;
-                                    rede.forEach(u3 => { if(u3.indicado_por === u2.nome && u3.status === 'liberado') n3++; });
-                                }
-                            });
-                        }
-                    });
-
-                    const atualizar = (id, atual, total) => {
-                        let p = (atual/total*100 > 100 ? 100 : atual/total*100);
-                        document.getElementById('bar_'+id).style.width = p + "%";
-                        document.getElementById('txt_'+id).innerText = `${atual} / ${total}`;
-                    };
-                    atualizar('n1', n1, 3); atualizar('n2', n2, 9); atualizar('n3', n3, 27);
-                } else {
-                    document.getElementById('loading').innerText = "ERRO: LÍDER NÃO ENCONTRADO.";
                 }
             });
         }
-
-        function copiar() {
-            const i = document.getElementById("linkConvite");
-            i.select(); navigator.clipboard.writeText(i.value);
-            alert("Link de Convite Copiado!");
-        }
+        function copiar() { /* Lógica de copiar */ }
     </script>
 </body>
 </html>
